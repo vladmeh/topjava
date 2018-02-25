@@ -24,11 +24,11 @@ public class UserMealWithExceed {
 
     @Override
     public String toString() {
-        return this.getClass().getName() + "{" +
+        return this.getClass().getSimpleName() + " {" +
                 "dateTime = " + dateTime +
                 ", description = " + description +
                 ", calories = " + calories +
                 ", exceed = " + exceed +
-                "}";
+                "}\n";
     }
 }
