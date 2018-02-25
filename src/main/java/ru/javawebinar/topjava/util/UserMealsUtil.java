@@ -18,17 +18,17 @@ public class UserMealsUtil {
 
     public static void main(String[] args) {
         List<UserMeal> mealList = Arrays.asList(
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30,10,0), "Завтрак", 500),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30,13,0), "Обед", 1000),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30,20,0), "Ужин", 500),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31,10,0), "Завтрак", 1000),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31,13,0), "Обед", 500),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31,20,0), "Ужин", 510)
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Ужин", 500),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 10, 0), "Завтрак", 1000),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510)
         );
 
         setMapDay(mealList);
 
-        List<UserMealWithExceed> results = getFilteredWithExceeded(mealList, LocalTime.of(7, 0), LocalTime.of(12,0), 2000);
+        List<UserMealWithExceed> results = getFilteredWithExceeded(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
 //        .toLocalDate();
 //        .toLocalTime();
 
@@ -36,11 +36,11 @@ public class UserMealsUtil {
 
     }
 
-    public static List<UserMealWithExceed>  getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
+    public static List<UserMealWithExceed> getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         List<UserMealWithExceed> list = new ArrayList<>();
         Iterator<UserMeal> iterator = mealList.iterator();
         iterator.forEachRemaining(userMeal -> {
-            if (TimeUtil.isBetween(userMeal.getDateTime().toLocalTime(), startTime, endTime)){
+            if (TimeUtil.isBetween(userMeal.getDateTime().toLocalTime(), startTime, endTime)) {
                 UserMealWithExceed userMealWithExceed = new UserMealWithExceed(
                         userMeal.getDateTime(),
                         userMeal.getDescription(),
@@ -53,7 +53,7 @@ public class UserMealsUtil {
         return list;
     }
 
-    public static void setMapDay(List<UserMeal> mealList){
+    public static void setMapDay(List<UserMeal> mealList) {
 
         Iterator<UserMeal> iterator = mealList.iterator();
         iterator.forEachRemaining(userMeal ->
@@ -65,11 +65,11 @@ public class UserMealsUtil {
     }
 
 
-    public static String resultString(List<UserMealWithExceed> results){
+    public static String resultString(List<UserMealWithExceed> results) {
 
         StringBuilder string = new StringBuilder();
 
-        for (UserMealWithExceed result: results) {
+        for (UserMealWithExceed result : results) {
             string.append(result.toString());
         }
 
