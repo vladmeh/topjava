@@ -15,8 +15,6 @@ import java.util.stream.Collectors;
  * 31.05.2015.
  */
 public class UserMealsUtil {
-    private static Map<LocalDate, Integer> mapDay = new HashMap<>();
-
     public static void main(String[] args) {
         List<UserMeal> mealList = Arrays.asList(
                 new UserMeal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500),
@@ -38,7 +36,7 @@ public class UserMealsUtil {
 
     public static List<UserMealWithExceed> getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         Map<LocalDate, Integer> mapDay = getMapDay(mealList);
-        List<UserMealWithExceed> list = new ArrayList<>();
+        List<UserMealWithExceed> userMealWithExceedArrayList = new ArrayList<>();
 
         for (UserMeal userMeal : mealList) {
             if (TimeUtil.isBetween(userMeal.getDateTime().toLocalTime(), startTime, endTime)) {
@@ -48,16 +46,20 @@ public class UserMealsUtil {
                         userMeal.getCalories(),
                         mapDay.get(userMeal.getDateTime().toLocalDate()) > caloriesPerDay
                 );
-                list.add(userMealWithExceed);
+                userMealWithExceedArrayList.add(userMealWithExceed);
             }
         }
 
-        return list;
+        return userMealWithExceedArrayList;
     }
 
     public static List<UserMealWithExceed> getFilteredWithExceededByStream(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
 
-        Map<LocalDate, Integer> mapDay = getMapDay(mealList);
+        Map<LocalDate, Integer> mapCaloriesDay = mealList.stream().collect(
+                Collectors.groupingBy(
+                        (UserMeal userMeal1) -> userMeal1.getDateTime().toLocalDate(),
+                        Collectors.summingInt(UserMeal::getCalories)
+                ));
 
         return mealList.stream()
                 .filter(userMeal -> TimeUtil.isBetween(userMeal.getDateTime().toLocalTime(), startTime, endTime))
@@ -65,18 +67,18 @@ public class UserMealsUtil {
                         userMeal.getDateTime(),
                         userMeal.getDescription(),
                         userMeal.getCalories(),
-                        mapDay.get(userMeal.getDateTime().toLocalDate()) > caloriesPerDay))
+                        mapCaloriesDay.get(userMeal.getDateTime().toLocalDate()) > caloriesPerDay))
                 .collect(Collectors.toList());
     }
 
     private static Map<LocalDate, Integer> getMapDay(List<UserMeal> mealList) {
-        Map<LocalDate, Integer> mapDay = new HashMap<>();
+        Map<LocalDate, Integer> mapCaloriesDay = new HashMap<>();
 
-        mealList.forEach(userMeal -> mapDay.merge(
+        mealList.forEach(userMeal -> mapCaloriesDay.merge(
                 userMeal.getDateTime().toLocalDate(),
                 userMeal.getCalories(), Integer::sum
         ));
 
-        return mapDay;
+        return mapCaloriesDay;
     }
 }
