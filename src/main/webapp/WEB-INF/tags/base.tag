@@ -1,7 +1,9 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ tag description="Simple Wrapper Tag" pageEncoding="UTF-8" %>
+<%@ attribute name="title" fragment="true" %>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Java Enterprise (Topjava)</title>
+    <title><jsp:invoke fragment="title"/></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
 </head>
 <body>
@@ -9,7 +11,7 @@
     <a class="navbar-brand" href="https://github.com/JavaWebinar/topjava">Java Enterprise (Topjava)</a>
     <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-            <a class="nav-link" href="/index.html">Home</a>
+            <a class="nav-link" href="<c:url value="/"/>">Home</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="users">Users</a>
@@ -20,12 +22,7 @@
     </ul>
 </nav>
 <div class="container">
-    <h2 class="page-header my-3">Проект <a href="https://github.com/JavaWebinar/topjava" target="_blank">Java Enterprise (Topjava)</a></h2>
-    <hr>
-    <ul>
-        <li><a href="users">Users</a></li>
-        <li><a href="meals">Meals</a></li>
-    </ul>
+    <jsp:doBody/>
 </div>
 </body>
 </html>
