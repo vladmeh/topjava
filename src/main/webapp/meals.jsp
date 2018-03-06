@@ -18,7 +18,6 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">#ID</th>
                 <th scope="col">Дата / Время</th>
                 <th scope="col">Описание</th>
                 <th scope="col">Калории</th>
@@ -30,7 +29,6 @@
             <c:forEach var="meal" items="${mealList}">
                 <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.MealWithExceed"/>
                 <tr class="<c:out value="${meal.exceed?'text-danger':'text-success'}"/>">
-                    <td>${meal.id}</td>
                     <td>${fn:formatLocalDateTime(meal.dateTime, 'dd.MM.yyyy HH:mm')}</td>
                     <td>${meal.description}</td>
                     <td>${meal.calories}</td>
@@ -56,6 +54,6 @@
             </c:forEach>
             </tbody>
         </table>
-        <%--<a href="#" class="btn btn-outline-primary" role="button">Добавить запись</a>--%>
+        <a href="meals?action=create" class="btn btn-outline-primary" role="button">Добавить запись</a>
     </jsp:body>
 </t:base>

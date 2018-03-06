@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealWithExceed;
 import ru.javawebinar.topjava.repository.MealRepository;
-import ru.javawebinar.topjava.repository.MealRepositoryImpl;
+import ru.javawebinar.topjava.repository.MemoryMealRepositoryImpl;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.servlet.ServletException;
@@ -25,18 +25,21 @@ public class MealServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        repository = new MealRepositoryImpl();
+        repository = new MemoryMealRepositoryImpl();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        Meal meal = new Meal(
-                Long.valueOf(req.getParameter("id")),
+        String id = req.getParameter("id");
+
+        Meal meal = new Meal((id.isEmpty()) ? null : Long.valueOf(id),
                 LocalDateTime.parse(req.getParameter("dateTime")),
                 req.getParameter("description"),
                 Integer.valueOf(req.getParameter("calories"))
         );
+
+        LOG.info((id.isEmpty())? "create new meal" : "update: {}", id);
         repository.save(meal);
         resp.sendRedirect("meals");
     }
@@ -45,19 +48,21 @@ public class MealServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String action = req.getParameter("action");
+        String id = req.getParameter("id");
 
         switch (action == null ? "all" : action) {
             case "delete":
-                Long id = Long.valueOf(req.getParameter("id"));
-                LOG.info("Delete {}", id);
-                repository.delete(id);
+
+                LOG.info("delete: {}", id);
+                repository.delete(Long.valueOf(id));
                 resp.sendRedirect("meals");
                 break;
             case "create":
             case "update":
-                id = Long.valueOf(req.getParameter("id"));
-                LOG.info("Update {}", id);
-                req.setAttribute("meal", repository.findOne(id));
+                Meal meal = (id == null)
+                        ? new Meal(null, "", 0)
+                        : repository.findOne(Long.valueOf(id));
+                req.setAttribute("meal", meal);
                 req.getRequestDispatcher("/mealForm.jsp").forward(req, resp);
             case "all":
             default:

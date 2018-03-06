@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * The type Meal repository.
  */
-public class MealRepositoryImpl implements MealRepository {
+public class MemoryMealRepositoryImpl implements MealRepository {
 
     /**
      * Вместо базы, создаем мапу, где будут наши записи
