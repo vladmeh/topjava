@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class MealServlet extends HttpServlet {
@@ -44,6 +45,9 @@ public class MealServlet extends HttpServlet {
         resp.sendRedirect("meals");
     }
 
+    /**
+     * @see <a href="http://www.java2s.com/Tutorials/Java_Date_Time/java.time/LocalDateTime/LocalDateTime_truncatedTo_TemporalUnit_unit_example.htm">LocalDateTime.now().truncatedTo(ChronoUnit.HOURS)</a>
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -60,7 +64,7 @@ public class MealServlet extends HttpServlet {
             case "create":
             case "update":
                 Meal meal = (id == null)
-                        ? new Meal(null, "", 0)
+                        ? new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.HOURS), "", 1000)
                         : repository.findOne(Long.valueOf(id));
                 req.setAttribute("meal", meal);
                 req.getRequestDispatcher("/mealForm.jsp").forward(req, resp);
