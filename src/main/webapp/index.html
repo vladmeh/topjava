@@ -5,27 +5,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="https://github.com/JavaWebinar/topjava">Java Enterprise (Topjava)</a>
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-            <a class="nav-link" href="/index.html">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="users">Users</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="meals">Meals</a>
-        </li>
-    </ul>
 </nav>
 <div class="container">
-    <h2 class="page-header my-3">Проект <a href="https://github.com/JavaWebinar/topjava" target="_blank">Java Enterprise (Topjava)</a></h2>
-    <hr>
-    <ul>
-        <li><a href="users">Users</a></li>
-        <li><a href="meals">Meals</a></li>
-    </ul>
+    <div class="jumbotron mt-5">
+        <h1 class="display-4">Java Enterprise проект</h1>
+        <p class="lead">с регистрацией/авторизацией и интерфейсом на основе ролей (USER, ADMIN). Администратор может создавать/редактировать/удалять пользователей, а пользователи - управлять своим профилем и данными (день, еда, калории) через UI (по AJAX) и по REST интерфейсу с базовой авторизацией. Возможна фильтрация данных по датам и времени, при этом цвет записи таблицы еды зависит от того, превышает ли сумма калорий за день норму (редактируемый параметр в профиле пользователя). Весь REST интерфейс покрывается JUnit тестами, используя Spring MVC Test и Spring Security Test.</p>
+        <hr class="my-4">
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="users" role="button">Users</a>
+            <a class="btn btn-primary btn-lg" href="meals" role="button">Meals</a>
+        </p>
+    </div>
 </div>
 </body>
 </html>
