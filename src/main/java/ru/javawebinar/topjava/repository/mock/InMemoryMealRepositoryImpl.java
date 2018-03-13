@@ -14,7 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Repository
 public class InMemoryMealRepositoryImpl implements MealRepository {
@@ -53,26 +55,21 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     @Override
     public boolean delete(int userId, int mealId) {
         Map<Integer, Meal> mealsOfUser = repository.get(userId);
-
-        if (mealsOfUser.get(mealId) == null) return false;
-
-        mealsOfUser.remove(mealId);
-        return true;
+        return mealsOfUser.get(mealId) != null && mealsOfUser.remove(mealId) != null;
     }
 
     @Override
     public Meal get(int userId, int mealId) {
         Map<Integer, Meal> mealsOfUser = repository.get(userId);
-        if (mealsOfUser == null) return null;
-
-        return mealsOfUser.get(mealId);
+        return mealsOfUser != null ? mealsOfUser.get(mealId) : null;
     }
 
     @Override
     public List<Meal> getAll(int userId) {
         Map<Integer, Meal> mealsOfUser = repository.get(userId);
 
-        if (mealsOfUser == null) return null;
+        if (mealsOfUser == null)
+            return Stream.<Meal>empty().collect(Collectors.toList());
 
         return mealsOfUser.values().stream().sorted(
                 Comparator.comparing(Meal::getDateTime)
