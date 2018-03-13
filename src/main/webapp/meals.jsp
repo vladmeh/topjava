@@ -9,6 +9,9 @@
 
     <jsp:body>
         <h2 class="page-header my-3">Meals</h2>
+        <div class="col-md-6 alert alert-dark mb-5">
+            <jsp:include page="WEB-INF/include/_filter_form.jsp"/>
+        </div>
         <table class="table">
             <thead>
             <tr>

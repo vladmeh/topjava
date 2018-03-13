@@ -1,5 +1,7 @@
 package ru.javawebinar.topjava.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.model.Meal;
@@ -13,12 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public class MealServlet extends HttpServlet {
 
+    private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
     private MealRestController mealRestController;
 
     @Override
@@ -32,15 +37,28 @@ public class MealServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        Meal meal = new Meal((request.getParameter("id").isEmpty()) ? null : getId(request),
-                LocalDateTime.parse(request.getParameter("dateTime")),
-                request.getParameter("description"),
-                Integer.valueOf(request.getParameter("calories")));
+        String filter = request.getParameter("filter");
 
-        if (meal.isNew())
-            mealRestController.create(meal);
-        else
-            mealRestController.update(meal, getId(request));
+        if (filter != null){
+            log.info("filter data time");
+            mealRestController.getAllFilter(
+                    LocalDate.parse(request.getParameter("startDate")),
+                    LocalDate.parse(request.getParameter("endDate")),
+                    LocalTime.parse(request.getParameter("startTime")),
+                    LocalTime.parse(request.getParameter("endTime"))
+            );
+        }
+        else{
+            Meal meal = new Meal((request.getParameter("id").isEmpty()) ? null : getId(request),
+                    LocalDateTime.parse(request.getParameter("dateTime")),
+                    request.getParameter("description"),
+                    Integer.valueOf(request.getParameter("calories")));
+
+            if (meal.isNew())
+                mealRestController.create(meal);
+            else
+                mealRestController.update(meal, getId(request));
+        }
         response.sendRedirect("meals");
     }
 
