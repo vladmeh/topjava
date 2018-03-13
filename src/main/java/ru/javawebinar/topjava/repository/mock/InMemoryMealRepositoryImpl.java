@@ -6,16 +6,13 @@ import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,9 +24,9 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     {
         MealsUtil.MEALS.forEach(userMeal -> save(1, userMeal));
 
-        this.save(2, new Meal(LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 0)), "Завтрак", 1000));
-        this.save(2, new Meal(LocalDateTime.of(LocalDate.now(), LocalTime.of(14, 0)), "Обед", 700));
-        this.save(2, new Meal(LocalDateTime.of(LocalDate.now(), LocalTime.of(20, 0)), "Ужин", 500));
+        this.save(2, new Meal(LocalDateTime.of(2015, 3, 13, 8, 0), "Завтрак", 1000));
+        this.save(2, new Meal(LocalDateTime.of(2015, 3, 13, 14, 0), "Обед", 700));
+        this.save(2, new Meal(LocalDateTime.of(2015, 3, 13, 20, 0), "Ужин", 500));
     }
 
     @Override
