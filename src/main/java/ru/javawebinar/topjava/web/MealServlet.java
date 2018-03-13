@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.util.exception.NotFoundException;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
 import javax.servlet.ServletConfig;
@@ -37,18 +36,17 @@ public class MealServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        String filter = request.getParameter("filter");
+        if (request.getParameter("filter") != null) {
+            request.setAttribute("meals",
+                    mealRestController.getFilterDateTime(
+                            request.getParameter("startDate").isEmpty() ? null : LocalDate.parse(request.getParameter("startDate")),
+                            request.getParameter("endDate").isEmpty() ? null : LocalDate.parse(request.getParameter("endDate")),
+                            request.getParameter("startTime").isEmpty() ? null : LocalTime.parse(request.getParameter("startTime")),
+                            request.getParameter("endTime").isEmpty() ? null : LocalTime.parse(request.getParameter("endTime"))
+                    ));
 
-        if (filter != null){
-            log.info("filter data time");
-            mealRestController.getAllFilter(
-                    LocalDate.parse(request.getParameter("startDate")),
-                    LocalDate.parse(request.getParameter("endDate")),
-                    LocalTime.parse(request.getParameter("startTime")),
-                    LocalTime.parse(request.getParameter("endTime"))
-            );
-        }
-        else{
+            request.getRequestDispatcher("/meals.jsp").forward(request, response);
+        } else {
             Meal meal = new Meal((request.getParameter("id").isEmpty()) ? null : getId(request),
                     LocalDateTime.parse(request.getParameter("dateTime")),
                     request.getParameter("description"),
@@ -58,8 +56,9 @@ public class MealServlet extends HttpServlet {
                 mealRestController.create(meal);
             else
                 mealRestController.update(meal, getId(request));
+
+            response.sendRedirect("meals");
         }
-        response.sendRedirect("meals");
     }
 
     @Override
@@ -76,8 +75,8 @@ public class MealServlet extends HttpServlet {
             case "update":
                 final Meal meal = "create".equals(action)
                         ? new Meal(
-                                LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
-                                "", 1000)
+                        LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
+                        "", 1000)
                         : mealRestController.get(getId(request));
 
                 request.setAttribute("meal", meal);

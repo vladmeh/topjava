@@ -11,6 +11,7 @@ import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -29,42 +30,51 @@ public class MealRestController {
         this.service = service;
     }
 
-    public Meal create(Meal meal){
+    public Meal create(Meal meal) {
         int userId = AuthorizedUser.id();
         log.info("create {} for user {}", meal, userId);
         checkNew(meal);
         return service.create(userId, meal);
     }
 
-    public void delete(int id){
+    public void delete(int id) {
         int userId = AuthorizedUser.id();
         log.info("delete {} for user {}", id, userId);
         service.delete(userId, id);
     }
 
-    public Meal get(int id){
+    public Meal get(int id) {
         int userId = AuthorizedUser.id();
         log.info("get {} for user {}", id, userId);
         return service.get(userId, id);
     }
 
-    public void update(Meal meal, int id){
+    public void update(Meal meal, int id) {
         int userId = AuthorizedUser.id();
         log.info("update {} with id={} for user {}", meal, id, userId);
         assureIdConsistent(meal, id);
         service.update(userId, meal);
     }
 
-    public List<MealWithExceed> getAll(){
+    public List<MealWithExceed> getAll() {
         int userId = AuthorizedUser.id();
         log.info("getAll");
         return MealsUtil.getWithExceeded(service.getAll(userId), MealsUtil.DEFAULT_CALORIES_PER_DAY);
     }
 
-    public List<MealWithExceed> getAllFilter(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime){
+    public List<MealWithExceed> getFilterDateTime(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime) {
         int userId = AuthorizedUser.id();
-        log.info("getAllFilter");
-        return MealsUtil.getFilteredWithExceeded(service.getAll(userId), MealsUtil.DEFAULT_CALORIES_PER_DAY, startTime, endTime);
+        log.info("getFilterDateTime");
+
+        List<Meal> mealList = service.getFilterDateTime(userId,
+                startDate == null ? LocalDateTime.MIN : LocalDateTime.of(startDate, LocalTime.MIN),
+                endDate == null ? LocalDateTime.MAX : LocalDateTime.of(endDate, LocalTime.MAX)
+        );
+
+        return MealsUtil.getFilteredWithExceeded(mealList, MealsUtil.DEFAULT_CALORIES_PER_DAY,
+                startTime == null ? LocalTime.MIN : startTime,
+                endTime == null ? LocalTime.MAX : endTime
+        );
     }
 
 }

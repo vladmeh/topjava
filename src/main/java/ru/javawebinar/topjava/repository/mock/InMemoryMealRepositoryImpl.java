@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.repository.mock;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.time.LocalDate;
@@ -75,6 +76,25 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
                 Comparator.comparing(Meal::getDateTime)
                         .reversed()
         ).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Meal> getFilterDateTime(int userId, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        Map<Integer, Meal> mealsOfUser = repository.get(userId);
+
+        if (mealsOfUser == null)
+            return Stream.<Meal>empty().collect(Collectors.toList());
+
+        return mealsOfUser.values().stream()
+                .sorted(
+                        Comparator.comparing(Meal::getDateTime)
+                                .reversed()
+                ).filter(
+                        meal -> DateTimeUtil.isBetween(
+                                meal.getDateTime(), startDateTime, endDateTime
+                        )
+                ).collect(Collectors.toList());
+
     }
 }
 

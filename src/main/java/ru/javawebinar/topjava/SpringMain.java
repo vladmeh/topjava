@@ -8,6 +8,9 @@ import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 import ru.javawebinar.topjava.web.user.AdminRestController;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
 
 public class SpringMain {
@@ -23,7 +26,11 @@ public class SpringMain {
             mealRestController.getAll().forEach(System.out::println);
 
             System.out.println();
-            mealRestController.delete(6);
+            mealRestController
+                    .getFilterDateTime(LocalDate.of(2015, 05, 30), null, null, LocalTime.of(14, 0))
+                    .forEach(System.out::println);
+
+
         }
     }
 }
