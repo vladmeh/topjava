@@ -10,10 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -70,7 +67,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         Map<Integer, Meal> mealsOfUser = repository.get(userId);
 
         if (mealsOfUser == null)
-            return new ArrayList<>();
+            return Collections.emptyList();
         //return Stream.<Meal>empty().collect(Collectors.toList());
 
         return mealsOfUser.values().stream().sorted(
@@ -84,7 +81,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         Map<Integer, Meal> mealsOfUser = repository.get(userId);
 
         if (mealsOfUser == null)
-            return new ArrayList<>();
+            return Collections.emptyList();
         //return Stream.<Meal>empty().collect(Collectors.toList());
 
         return mealsOfUser.values().stream()
