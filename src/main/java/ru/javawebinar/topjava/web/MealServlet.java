@@ -19,13 +19,20 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public class MealServlet extends HttpServlet {
+    private ConfigurableApplicationContext appCtx;
     private MealRestController mealRestController;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml");
         mealRestController = appCtx.getBean(MealRestController.class);
+    }
+
+    @Override
+    public void destroy() {
+        appCtx.close();
+        super.destroy();
     }
 
     @Override

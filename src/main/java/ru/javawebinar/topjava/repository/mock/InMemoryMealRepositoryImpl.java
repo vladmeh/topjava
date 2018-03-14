@@ -6,8 +6,11 @@ import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +56,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     @Override
     public boolean delete(int userId, int mealId) {
         Map<Integer, Meal> mealsOfUser = repository.get(userId);
-        return mealsOfUser.get(mealId) != null && mealsOfUser.remove(mealId) != null;
+        return mealsOfUser != null && mealsOfUser.remove(mealId) != null;
     }
 
     @Override
@@ -67,7 +70,8 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         Map<Integer, Meal> mealsOfUser = repository.get(userId);
 
         if (mealsOfUser == null)
-            return Stream.<Meal>empty().collect(Collectors.toList());
+            return new ArrayList<>();
+        //return Stream.<Meal>empty().collect(Collectors.toList());
 
         return mealsOfUser.values().stream().sorted(
                 Comparator.comparing(Meal::getDateTime)
@@ -76,11 +80,12 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     }
 
     @Override
-    public List<Meal> getFilterDateTime(int userId, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public List<Meal> getFilterDate(int userId, LocalDate startDate, LocalDate endDate) {
         Map<Integer, Meal> mealsOfUser = repository.get(userId);
 
         if (mealsOfUser == null)
-            return Stream.<Meal>empty().collect(Collectors.toList());
+            return new ArrayList<>();
+        //return Stream.<Meal>empty().collect(Collectors.toList());
 
         return mealsOfUser.values().stream()
                 .sorted(
@@ -88,7 +93,9 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
                                 .reversed()
                 ).filter(
                         meal -> DateTimeUtil.isBetween(
-                                meal.getDateTime(), startDateTime, endDateTime
+                                meal.getDateTime(),
+                                LocalDateTime.of(startDate, LocalTime.MIN),
+                                LocalDateTime.of(endDate, LocalTime.MAX)
                         )
                 ).collect(Collectors.toList());
 

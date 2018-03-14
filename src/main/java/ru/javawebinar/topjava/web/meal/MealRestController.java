@@ -11,7 +11,6 @@ import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -64,11 +63,11 @@ public class MealRestController {
 
     public List<MealWithExceed> getFilterDateTime(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime) {
         int userId = AuthorizedUser.id();
-        log.info("getFilterDateTime");
+        log.info("getFilterDate");
 
-        List<Meal> mealList = service.getFilterDateTime(userId,
-                startDate == null ? LocalDateTime.MIN : LocalDateTime.of(startDate, LocalTime.MIN),
-                endDate == null ? LocalDateTime.MAX : LocalDateTime.of(endDate, LocalTime.MAX)
+        List<Meal> mealList = service.getFilterDate(userId,
+                startDate == null ? LocalDate.MIN : startDate,
+                endDate == null ? LocalDate.MAX : endDate
         );
 
         return MealsUtil.getFilteredWithExceeded(mealList, MealsUtil.DEFAULT_CALORIES_PER_DAY,
