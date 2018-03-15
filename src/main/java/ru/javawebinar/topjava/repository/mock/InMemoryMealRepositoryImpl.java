@@ -52,14 +52,12 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public boolean delete(int userId, int mealId) {
-        Map<Integer, Meal> mealsOfUser = repository.get(userId);
-        return mealsOfUser != null && mealsOfUser.remove(mealId) != null;
+        return repository.get(userId) != null && repository.get(userId).remove(mealId) != null;
     }
 
     @Override
     public Meal get(int userId, int mealId) {
-        Map<Integer, Meal> mealsOfUser = repository.get(userId);
-        return mealsOfUser != null ? mealsOfUser.get(mealId) : null;
+        return repository.get(userId) != null ? repository.get(userId).get(mealId) : null;
     }
 
     @Override
@@ -70,10 +68,11 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
             return Collections.emptyList();
         //return Stream.<Meal>empty().collect(Collectors.toList());
 
-        return mealsOfUser.values().stream().sorted(
-                Comparator.comparing(Meal::getDateTime)
-                        .reversed()
-        ).collect(Collectors.toList());
+        return mealsOfUser.values().stream()
+                .sorted(
+                        Comparator.comparing(Meal::getDateTime)
+                                .reversed()
+                ).collect(Collectors.toList());
     }
 
     @Override
