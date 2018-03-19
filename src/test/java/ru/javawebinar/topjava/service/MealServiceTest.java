@@ -82,7 +82,7 @@ public class MealServiceTest {
         updated.setDescription("Updated Description");
         updated.setCalories(1500);
         service.update(updated, USER_ID);
-        assertMatch(service.get(MEAL_ID + 6, USER_ID), updated);
+        assertMatch(service.get(USER_MEAL1.getId(), USER_ID), updated);
     }
 
     @Test(expected = NotFoundException.class)
@@ -103,7 +103,7 @@ public class MealServiceTest {
 
     @Test(expected = DataAccessException.class)
     public void duplicateDateTimeCreate() {
-        Meal newMeal = new Meal(null, LocalDateTime.of(2018, Month.MARCH, 13, 8, 0), "Обед", 700);
+        Meal newMeal = new Meal(null, USER_MEAL1.getDateTime(), "Обед", 700);
         service.create(newMeal, USER_ID);
     }
 
