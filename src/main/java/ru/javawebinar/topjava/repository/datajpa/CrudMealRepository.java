@@ -10,17 +10,18 @@ import ru.javawebinar.topjava.model.Meal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Transactional(readOnly = true)
 public interface CrudMealRepository extends JpaRepository<Meal, Integer> {
 
-    @Transactional
     @Modifying
-    @Query(Meal.DELETE)
+    @Transactional
+    @Query(name = Meal.DELETE)
     int delete(@Param("id") int id, @Param("userId") int userId);
 
-    @Query(Meal.ALL_SORTED)
+    @Query(name = Meal.ALL_SORTED)
     List<Meal> getAll(@Param("userId") int userId);
 
-    @Query(Meal.GET_BETWEEN)
+    @Query(name = Meal.GET_BETWEEN)
     List<Meal> getBetween(@Param("startDate") LocalDateTime startDate,
                           @Param("endDate") LocalDateTime endDate,
                           @Param("userId") int userId);
