@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.service.meal;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.service.AbstractServiceTest;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
