@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.service;
 
 import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.Stopwatch;
@@ -56,5 +57,10 @@ abstract public class AbstractServiceTest {
                 "\n---------------------------------" +
                 results +
                 "\n---------------------------------");
+    }
+
+    @BeforeClass
+    public static void clearResult(){
+        results.setLength(0);
     }
 }
