@@ -20,4 +20,10 @@ public interface MealRepository {
 
     // ORDERED dateTime desc
     List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId);
+
+    // 4: Если у метода нет реализации, то стандартно бросается UnsupportedOperationException.
+    // 5: Для уменьшения количества кода при реализации Optional (п. 7, только DataJpa) попробуйте сделать default метод в интерфейсе
+    default Meal getMealUser(int id, int userId) {
+        throw new UnsupportedOperationException();
+    }
 }

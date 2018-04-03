@@ -17,4 +17,10 @@ public interface UserRepository {
     User getByEmail(String email);
 
     List<User> getAll();
+
+    // 4: Если у метода нет реализации, то стандартно бросается UnsupportedOperationException.
+    // 5: Для уменьшения количества кода при реализации Optional (п. 7, только DataJpa) попробуйте сделать default метод в интерфейсе
+    default User getUserMeals(int id) {
+        throw new UnsupportedOperationException();
+    }
 }
