@@ -7,4 +7,3 @@ log
 /patch/
 db/*
 *.stackdump
-/config/
