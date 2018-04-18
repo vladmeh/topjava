@@ -21,12 +21,6 @@ import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 @RequestMapping(value = "/meals")
 public class JspMealController extends AbstractMealController{
 
-    @GetMapping("")
-    public String meals(Model model){
-        model.addAttribute("meals", super.getAll());
-        return "meals";
-    }
-
     @GetMapping("/delete")
     public String delete(HttpServletRequest request){
         super.delete(getId(request));
