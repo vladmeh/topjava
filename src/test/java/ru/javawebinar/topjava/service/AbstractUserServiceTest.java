@@ -58,6 +58,12 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
         assertMatch(user, USER);
     }
 
+    @Test
+    public void getAdmin() throws Exception {
+        User admin = service.get(ADMIN_ID);
+        assertMatch(admin, ADMIN);
+    }
+
     @Test(expected = NotFoundException.class)
     public void getNotFound() throws Exception {
         service.get(1);
@@ -70,10 +76,17 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    public void getAdminByEmail() throws Exception {
+        User admin = service.getByEmail("admin@gmail.com");
+        assertMatch(admin, ADMIN);
+    }
+
+    @Test
     public void update() throws Exception {
         User updated = new User(USER);
         updated.setName("UpdatedName");
         updated.setCaloriesPerDay(330);
+        updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
         service.update(updated);
         assertMatch(service.get(USER_ID), updated);
     }
