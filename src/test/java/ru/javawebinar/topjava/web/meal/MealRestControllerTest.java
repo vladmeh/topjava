@@ -88,6 +88,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
         mockMvc.perform(get(REST_URL + "/filter?startDateTime=2015-05-30T15:00&endDateTime=2015-05-31T20:00:00"))
                 .andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(contentType())
                 .andExpect(contentJson(
                         MealsUtil.createWithExceed(MEAL6, true),
                         MealsUtil.createWithExceed(MEAL3, false)
