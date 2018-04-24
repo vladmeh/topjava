@@ -1,0 +1,43 @@
+### meals getAll
+GET http://localhost:8080/topjava/rest/profile/meals
+Accept: application/json
+
+### meals get
+GET http://localhost:8080/topjava/rest/profile/meals/100005
+Accept: application/json
+
+### meals create
+POST http://localhost:8080/topjava/rest/profile/meals
+Content-Type: application/json
+
+{
+    "dateTime": "2015-06-01T18:00",
+    "description": "Новая еда",
+    "calories": 300
+}
+
+### meals delete
+DELETE http://localhost:8080/topjava/rest/profile/meals/100011
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 204, "Response status is not 204");
+});
+%}
+
+### meals update
+PUT http://localhost:8080/topjava/rest/profile/meals/100002
+Content-Type: application/json
+
+{
+    "dateTime": "2015-05-30T10:00",
+    "description": "Обновленная еда",
+    "calories": 400
+}
+
+### meals filter
+GET http://localhost:8080/topjava/rest/profile/meals/filter?startDate=2015-05-31&endTime=17:00:00
+Accepts: application/json
+
+###
+
