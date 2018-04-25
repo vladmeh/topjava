@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.javawebinar.topjava.MealTestData.*;
-import static ru.javawebinar.topjava.TestUtil.contentType;
+import static ru.javawebinar.topjava.TestUtil.*;
 import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
 import static ru.javawebinar.topjava.web.meal.MealRestController.REST_URL;
 
@@ -39,7 +39,8 @@ public class MealRestControllerTest extends AbstractControllerTest {
     @Test
     public void testDelete() throws Exception {
         mockMvc.perform(delete(REST_URL + '/' + MEAL1_ID))
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(status().isNoContent());
+                //.andExpect(status().is2xxSuccessful());
         assertMatch(mealService.getAll(MEAL1_ID));
 
     }

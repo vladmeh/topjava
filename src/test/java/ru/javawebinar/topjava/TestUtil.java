@@ -6,8 +6,10 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static ru.javawebinar.topjava.web.json.JsonUtil.writeValue;
 
 public class TestUtil {
 
@@ -27,4 +29,13 @@ public class TestUtil {
     public static ResultMatcher contentType(){
         return content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON);
     }
+
+    public static <T> ResultMatcher contentJson(T expected){
+        return content().json(writeValue(expected));
+    }
+
+    public static <T> ResultMatcher contentJson(T... expected){
+        return content().json(writeValue(Arrays.asList(expected)));
+    }
+
 }

@@ -48,11 +48,11 @@ public class MealTestData {
         assertThat(actual).usingElementComparatorIgnoringFields("user").isEqualTo(expected);
     }
 
-    public static <T> ResultMatcher contentJson(T expected){
+    /*public static <T> ResultMatcher contentJson(T expected){
         return content().json(writeValue(expected));
     }
 
     public static <T> ResultMatcher contentJson(T... expected){
         return content().json(writeValue(Arrays.asList(expected)));
-    }
+    }*/
 }
