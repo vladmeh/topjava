@@ -22,7 +22,7 @@ $(function () {
             {
                 "defaultContent": "Delete",
                 "orderable": false
-            },
+            }
         ],
         "order": [
             [
