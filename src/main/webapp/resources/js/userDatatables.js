@@ -1,6 +1,12 @@
 var ajaxUrl = "ajax/admin/users/";
 var datatableApi;
 
+function updateTable() {
+    $.get(ajaxUrl, function (data) {
+        datatableApi.clear().rows.add(data).draw();
+    });
+}
+
 // $(document).ready(function () {
 $(function () {
     datatableApi = $("#datatable").DataTable({
