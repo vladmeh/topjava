@@ -14,6 +14,7 @@ function clearFilter(){
     $("#filter").trigger('reset');
     $.get(ajaxUrl, function (data) {
         datatableApi.clear().rows.add(data).draw();
+        successNoty("Clear filter");
     });
 }
 

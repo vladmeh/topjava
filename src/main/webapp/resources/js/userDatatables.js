@@ -7,6 +7,16 @@ function updateTable() {
     });
 }
 
+function enabled(checkbox, id){
+    //console.log(checkbox.parentNode.parentNode);
+    $.post(ajaxUrl + id, {'enable' : checkbox.checked},
+        function () {
+            var tr = checkbox.parentNode.parentNode;
+            $(tr).toggleClass('table-dark');
+            successNoty((checkbox.checked ? "Enabled" : "Disabled") + " - id: " + id);
+        })
+}
+
 // $(document).ready(function () {
 $(function () {
     datatableApi = $("#datatable").DataTable({
