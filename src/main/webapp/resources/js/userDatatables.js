@@ -2,19 +2,22 @@ var ajaxUrl = "ajax/admin/users/";
 var datatableApi;
 
 function updateTable() {
-    $.get(ajaxUrl, function (data) {
-        datatableApi.clear().rows.add(data).draw();
-    });
+    $.get(ajaxUrl, datatableDraw);
 }
 
 function enabled(checkbox, id){
     //console.log(checkbox.parentNode.parentNode);
-    $.post(ajaxUrl + id, {'enable' : checkbox.checked},
-        function () {
+    var enable = checkbox.checked;
+
+    $.post(ajaxUrl + id, {'enable' : enable})
+        .done(function () {
             var tr = checkbox.parentNode.parentNode;
             $(tr).toggleClass('table-dark');
-            successNoty((checkbox.checked ? "Enabled" : "Disabled") + " - id: " + id);
+            successNoty((enable ? "Enabled" : "Disabled") + " - id: " + id);
         })
+        .fail(function () {
+            checkbox.checked = !enable;
+        });
 }
 
 // $(document).ready(function () {

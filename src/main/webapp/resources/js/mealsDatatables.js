@@ -4,18 +4,13 @@ var datatableApi;
 function updateTable() {
     var form = $("#filter");
 
-    $.post(ajaxUrl + "filter", form.serialize(), function (data) {
-        datatableApi.clear().rows.add(data).draw();
-    })
+    $.post(ajaxUrl + "filter", form.serialize(), datatableDraw);
 }
 
 function clearFilter(){
     //document.getElementById('filter').reset();
     $("#filter").trigger('reset');
-    $.get(ajaxUrl, function (data) {
-        datatableApi.clear().rows.add(data).draw();
-        successNoty("Clear filter");
-    });
+    $.get(ajaxUrl, datatableDraw).done(successNoty("Clear filter"));
 }
 
 $(function () {
@@ -44,7 +39,7 @@ $(function () {
         "order": [
             [
                 0,
-                "asc"
+                "desc"
             ]
         ]
     });
