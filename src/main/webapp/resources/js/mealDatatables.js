@@ -27,7 +27,7 @@ $(function () {
                 "data": "dateTime",
                 "render": function (date, type, row) {
                     if (type === 'display'){
-                        return date.replace('T', ' ').substr(0, 16);
+                        return dateTimeFormat(date);
                     }
                     return date;
                 }
@@ -60,5 +60,21 @@ $(function () {
             $(row).attr("data-mealExceed", data.exceed);
         },
         "initComplete" : makeEditable
+    });
+
+    $("#startDate, #endDate").datetimepicker({
+        timepicker: false,
+        format: 'Y-m-d',
+        formatDate: 'Y-m-d'
+    });
+
+    $("#startTime, #endTime").datetimepicker({
+        datepicker: false,
+        format: 'H:i'
+    });
+
+    $("#dateTime").datetimepicker({
+        format: 'Y-m-d H:i',
+        mask:true
     });
 });
