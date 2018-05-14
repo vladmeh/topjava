@@ -52,10 +52,11 @@ public class ExceptionInfoHandler {
     }
 
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
-    @ExceptionHandler({BindException.class})
-    public ErrorInfo bindDataException(HttpServletRequest req, BindException e){
+    @ExceptionHandler({BindException.class, MethodArgumentNotValidException.class})
+    public ErrorInfo bindDataException(HttpServletRequest req, Exception e){
         log.warn("{} at request  {}: {}", VALIDATION_ERROR, req.getRequestURL(), e.toString());
-        return new ErrorInfo(req.getRequestURL(), VALIDATION_ERROR, ValidationUtil.getErrorString(e.getBindingResult()));
+        BindingResult result = (e instanceof BindingResult) ? ((BindException) e).getBindingResult() : ((MethodArgumentNotValidException) e).getBindingResult();
+        return new ErrorInfo(req.getRequestURL(), VALIDATION_ERROR, ValidationUtil.getErrorString(result));
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
