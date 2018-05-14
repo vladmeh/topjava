@@ -27,3 +27,19 @@
 
 #### update Meals
 `curl -s -X PUT -d '{"dateTime":"2015-05-30T07:00", "description":"Updated breakfast", "calories":200}' -H 'Content-Type: application/json' http://localhost:8080/topjava/rest/profile/meals/100003 --user user@yandex.ru:password`
+
+### Validate
+#### create meal with free data
+`curl -s -X POST -d '{}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/topjava/rest/profile/meals --user user@yandex.ru:password`
+
+#### create meal double DateTime
+`curl -s -X POST -d '{"dateTime":"2015-05-30T13:00","description":"Created new","calories":300}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/topjava/rest/profile/meals --user user@yandex.ru:password`
+
+#### update meal double DateTime
+`curl -s -X PUT -d '{"dateTime":"2015-05-30T13:00","description":"Created new","calories":300}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/topjava/rest/profile/meals/100004 --user user@yandex.ru:password`
+
+#### create user with free data
+`curl -s -X POST -d '{}' -H 'Content-Type: application/json' http://localhost:8080/topjava/rest/admin/users --user admin@gmail.com:admin`
+
+#### create user with double email
+`curl -s -X POST -d '{"name": "New user","email":"user@yandex.ru", "password":"12345"}' -H 'Content-Type: application/json' http://localhost:8080/topjava/rest/admin/users --user admin@gmail.com:admin`
