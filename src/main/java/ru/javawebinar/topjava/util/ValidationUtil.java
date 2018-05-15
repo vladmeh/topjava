@@ -59,7 +59,7 @@ public class ValidationUtil {
         return result;
     }
 
-    public static String getErrorString(BindingResult result){
+    public static String getErrorString(BindingResult result) {
         StringJoiner joiner = new StringJoiner("<br>");
         result.getFieldErrors().forEach(
                 fe -> {
