@@ -330,7 +330,6 @@
             <version>${jsonassert.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
@@ -342,6 +341,16 @@
             <version>3.9.1</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://stackoverflow.com/questions/17726282/jsonpath-noclassdeffounderror-or-an-alternative-to-jsonpath-in-java -->
+        <!-- https://mvnrepository.com/artifact/com.jayway.jsonpath/json-path -->
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>2.4.0</version>
+            <scope>test</scope>
+        </dependency>
+
+
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
