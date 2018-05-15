@@ -4,7 +4,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
-<jsp:include page="fragments/headTag.jsp"/>
+<jsp:include page="/WEB-INF/jsp/fragments/headTag.jsp"/>
 <body>
 <nav class="navbar navbar-dark bg-dark">
     <div class="container">
@@ -16,6 +16,7 @@
                 <span class="fa fa-sign-in"></span>
             </button>
         </form:form>
+        <jsp:include page="/WEB-INF/jsp/fragments/locale.jsp"/>
     </div>
 </nav>
 
@@ -73,7 +74,7 @@
         Весь REST интерфейс покрывается JUnit тестами, используя Spring MVC Test и Spring Security Test.
     </div>
 </div>
-<jsp:include page="fragments/footer.jsp"/>
+<jsp:include page="/WEB-INF/jsp/fragments/footer.jsp"/>
 <script type="text/javascript">
     <c:if test="${not empty param.username}">
     setCredentials("${param.username}", "");

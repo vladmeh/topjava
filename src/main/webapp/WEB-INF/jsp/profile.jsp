@@ -4,10 +4,10 @@
 <%@ taglib prefix="topjava" tagdir="/WEB-INF/tags" %>
 
 <html>
-<jsp:include page="fragments/headTag.jsp"/>
+<jsp:include page="/WEB-INF/jsp/fragments/headTag.jsp"/>
 
 <body>
-<jsp:include page="fragments/bodyHeader.jsp"/>
+<jsp:include page="/WEB-INF/jsp/fragments/bodyHeader.jsp"/>
 
 <div class="jumbotron pt-4">
     <div class="container">
@@ -34,6 +34,6 @@
         </div>
     </div>
 </div>
-<jsp:include page="fragments/footer.jsp"/>
+<jsp:include page="/WEB-INF/jsp/fragments/footer.jsp"/>
 </body>
 </html>
