@@ -17,7 +17,3 @@ branches:
   only:
   - master
   - HW10
-
-# https://docs.travis-ci.com/user/notifications#Configuring-email-notifications
-#notifications:
-#  email: false
