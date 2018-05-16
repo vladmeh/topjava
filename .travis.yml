@@ -17,3 +17,6 @@ branches:
   only:
   - master
   - HW10
+
+env:
+  - TOPJAVA_ROOT=$TRAVIS_BUILD_DIR
