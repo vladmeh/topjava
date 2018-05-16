@@ -37,8 +37,8 @@ import static ru.javawebinar.topjava.util.exception.ErrorType.*;
 public class ExceptionInfoHandler {
     private static Logger log = LoggerFactory.getLogger(ExceptionInfoHandler.class);
 
-    private static final String EXCEPTION_DUPLICATE_EMAIL = "exception.duplicateEmail";
-    private static final String EXCEPTION_DUPLICATE_DATETIME = "exception.duplicateDateTime";
+    public static final String EXCEPTION_DUPLICATE_EMAIL = "exception.duplicateEmail";
+    public static final String EXCEPTION_DUPLICATE_DATETIME = "exception.duplicateDateTime";
 
     // https://stackoverflow.com/questions/6802483/how-to-directly-initialize-a-hashmap-in-a-literal-way
     private static final Map<String, String> EXCEPTION_MAP = new HashMap<String, String>() {
